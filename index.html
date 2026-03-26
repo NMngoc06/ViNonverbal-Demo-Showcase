@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Nonverbal Speech Recognition Demo</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #fafafa;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .section {
+      margin-top: 50px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #eee;
+      margin-right: 5px;
+      font-size: 12px;
+    }
+
+    .pipeline-img {
+      width: 100%;
+      max-width: 800px;
+      display: block;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- TITLE -->
+<h1>Nonverbal Speech Recognition</h1>
+<p style="text-align:center;">
+  Demo nhận diện cảm xúc & tín hiệu phi ngôn ngữ từ giọng nói
+</p>
+
+<!-- ABSTRACT -->
+<div class="section">
+  <h2>Abstract</h2>
+  <div class="card">
+    <p>
+      Chúng tôi đề xuất một mô hình nhận diện nonverbal từ speech, bao gồm
+      emotion, hesitation và energy level. Mô hình được huấn luyện trên
+      dữ liệu tiếng Việt và sử dụng đặc trưng âm thanh để phân loại trạng thái người nói.
+    </p>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div class="section">
+  <h2>Pipeline</h2>
+  <div class="card">
+    <img src="pipeline.png" class="pipeline-img">
+    <p style="text-align:center;">
+      Audio → Feature Extraction → Model → Prediction
+    </p>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="section">
+  <h2>Results</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>Model</th>
+        <th>Accuracy</th>
+        <th>F1-score</th>
+      </tr>
+      <tr>
+        <td>Baseline</td>
+        <td>78.2%</td>
+        <td>0.75</td>
+      </tr>
+      <tr>
+        <td>Proposed Model</td>
+        <td><b>85.6%</b></td>
+        <td><b>0.83</b></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- AUDIO SAMPLES -->
+<div class="section">
+  <h2>Audio Samples</h2>
+  <div id="samples" class="grid"></div>
+</div>
+
+<script>
+const data = [
+  {
+    file: "audio/001.wav",
+    text: "Tôi không biết nữa...",
+    emotion: "sad",
+    nonverbal: "hesitation"
+  },
+  {
+    file: "audio/002.wav",
+    text: "Thật tuyệt vời!",
+    emotion: "happy",
+    nonverbal: "high_energy"
+  },
+  {
+    file: "audio/003.wav",
+    text: "Ờ... có lẽ là vậy",
+    emotion: "neutral",
+    nonverbal: "pause"
+  }
+];
+
+const container = document.getElementById("samples");
+
+data.forEach(item => {
+  const div = document.createElement("div");
+  div.className = "card";
+
+  div.innerHTML = `
+    <audio controls src="${item.file}"></audio>
+    <p><b>Text:</b> ${item.text}</p>
+    <p>
+      <span class="tag">Emotion: ${item.emotion}</span>
+      <span class="tag">Nonverbal: ${item.nonverbal}</span>
+    </p>
+  `;
+
+  container.appendChild(div);
+});
+</script>
+
+</body>
+</html>
