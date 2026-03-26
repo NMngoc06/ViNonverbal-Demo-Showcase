@@ -86,9 +86,9 @@
   <h2>Abstract</h2>
   <div class="card">
     <p>
-      Chúng tôi đề xuất một mô hình nhận diện nonverbal từ speech, bao gồm
-      emotion, hesitation và energy level. Mô hình được huấn luyện trên
-      dữ liệu tiếng Việt và sử dụng đặc trưng âm thanh để phân loại trạng thái người nói.
+      Nonverbal vocalizations, such as laughter and fillers, play a critical role in expressive speech generation and understanding, yet they are largely ignored in existing ASR and TTS systems. This limitation is particularly evident for low-resource languages like Vietnamese, where no dataset explicitly models nonverbal signals.
+      In this work, we introduce Vinonverbal, the first Vietnamese dataset designed for nonverbal-aware ASR. The data are collected from real-world sources and processed through a semi-automatic pipeline, including speech separation, segmentation, and quality filtering, followed by ASR-based pseudo-labeling of nonverbal events. The resulting dataset contains approximately 40,000 Vietnamese samples (X hours of audio) with X types of nonverbal labels.
+      We fine-tune multilingual ASR models, including Qwen3-ASR and Whisper, with extended nonverbal tokens. Evaluation on a manually annotated subset of 200 samples demonstrates effective recognition of nonverbal events while maintaining stable word error rate (WER)...
     </p>
   </div>
 </div>
@@ -97,7 +97,7 @@
 <div class="section">
   <h2>Pipeline</h2>
   <div class="card">
-    <img src="pipeline.png" class="pipeline-img">
+    <img src="pipelinedata.png" class="pipeline-img">
     <p style="text-align:center;">
       Audio → Feature Extraction → Model → Prediction
     </p>
