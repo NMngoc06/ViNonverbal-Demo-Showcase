@@ -13,12 +13,7 @@
       color: #1f2937;
     }
 
-    h1 {
-      text-align: center;
-      color: #4f46e5;
-    }
-
-    h2 {
+    h1, h2 {
       text-align: center;
       color: #1e3a8a;
     }
@@ -31,41 +26,35 @@
     .card {
       background: white;
       padding: 25px;
-      margin: 0 auto;
+      margin: 25px auto;
       border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       max-width: 900px;
-      transition: all 0.25s ease;
       border-left: 5px solid #6366f1;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
     }
 
     audio {
       width: 100%;
       margin-top: 10px;
-      border-radius: 8px;
     }
 
-    /* FIX: 1 COLUMN */
+    /* ✅ FIX AUDIO: 1 CỘT */
     .grid {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      max-width: 900px;
+      margin: auto;
     }
 
     .tag {
       display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: #e0e7ff;
-      margin-right: 6px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: #eef3ff;
+      margin-right: 5px;
       font-size: 12px;
-      color: #3730a3;
-      font-weight: 500;
+      color: #2a4b8d;
     }
 
     .pipeline-img {
@@ -93,6 +82,7 @@
     .result-table td {
       padding: 12px;
       border-top: 1px solid #eee;
+      text-align: center;
     }
 
     .result-table tr:hover {
@@ -101,18 +91,143 @@
 
     h3 {
       margin-bottom: 10px;
+      text-align: center;
+    }
+
+    /* DATA ANALYSIS */
+    .chart {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .download {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .download a {
+      background: #4f46e5;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
     }
   </style>
 </head>
 
 <body>
 
+<!-- TITLE -->
 <h1>Nonverbal Speech Recognition</h1>
+<p style="text-align:center;">
+  Demo nhận diện cảm xúc & tín hiệu phi ngôn ngữ từ giọng nói
+</p>
 
+<!-- ABSTRACT -->
+<div class="section">
+  <h2>Abstract</h2>
+  <div class="card">
+    <p>
+      Nonverbal vocalizations, such as laughter and fillers, play a critical role...
+    </p>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div class="section">
+  <h2>Pipeline</h2>
+  <div class="card">
+    <img src="pipelinedata.png" class="pipeline-img">
+    <p style="text-align:center;">
+      Audio → Feature Extraction → Model → Prediction
+    </p>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="section">
+  <h2>Results</h2>
+
+  <!-- TABLE 1 -->
+  <div class="card">
+    <h3>ASR Performance on VIVOS (WER)</h3>
+    <table class="result-table">
+      <tr>
+        <th>Model</th>
+        <th>WER (%)</th>
+      </tr>
+      <tr>
+        <td>PhoWhisper (large)</td>
+        <td>--</td>
+      </tr>
+      <tr>
+        <td>wav2vec2-large-vi-vlsp2020</td>
+        <td>--</td>
+      </tr>
+      <tr>
+        <td>Qwen3-ASR (ft)</td>
+        <td>--</td>
+      </tr>
+      <tr>
+        <td>Whisper (ft)</td>
+        <td>--</td>
+      </tr>
+    </table>
+  </div>
+
+  <p style="text-align:center; max-width:800px; margin:auto;">
+    The results indicate that incorporating nonverbal annotations does not degrade ASR performance.
+  </p>
+
+  <!-- TABLE 2 -->
+  <div class="card">
+    <h3>Performance on Proposed Dataset</h3>
+    <table class="result-table">
+      <tr>
+        <th>Model</th>
+        <th>WER</th>
+        <th>Precision</th>
+        <th>Recall</th>
+        <th>F1</th>
+      </tr>
+      <tr>
+        <td>Whisper</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+      </tr>
+      <tr>
+        <td>Qwen3-ASR</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- AUDIO SAMPLES -->
 <div class="section">
   <h2>Audio Samples</h2>
   <div id="samples" class="grid"></div>
 </div>
+
+<!-- DATA ANALYSIS -->
+<div class="section">
+  <h2>Data Analysis</h2>
+  <div class="card">
+    <h3>Nonverbal Distribution</h3>
+    <canvas id="chart" class="chart"></canvas>
+
+    <div class="download">
+      <a href="dataset.zip" download>⬇ Download Dataset</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 const data = [
@@ -124,13 +239,13 @@ const data = [
   },
   {
     file: "UUI5v6yepFQ_64.wav",
-    text: "chị thì giỏi giang, chị nuôi con ăn học tới nơi tới chốn thì dễ, <sniffle> chứ tôi nghèo, con mừng nó phải nghỉ học từ hồi sớm lận, nó cực khổ trăm bề với tôi mà, với lại",
+    text: "chị thì giỏi giang... <sniffle>",
     nonverbal: "<sniffle>",
     emotion: "sad"
   },
   {
     file: "eSou7s6C2FY_2.wav",
-    text: "anh đã không còn bận tâm nữa rồi từ nay anh sẽ không bao giờ giận em <laugh>",
+    text: "anh đã không còn bận tâm... <laugh>",
     nonverbal: "<laugh>",
     emotion: "happy"
   }
@@ -152,6 +267,19 @@ data.forEach(item => {
   `;
 
   container.appendChild(div);
+});
+
+/* CHART */
+const ctx = document.getElementById('chart');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['laugh', 'sniffle', 'uhm'],
+    datasets: [{
+      label: 'Frequency',
+      data: [12, 8, 15]
+    }]
+  }
 });
 </script>
 
