@@ -118,7 +118,7 @@
 <body>
 
 <!-- TITLE -->
-<h1>Nonverbal Speech Recognition</h1>
+<h1>ViNonverbal Demo </h1>
 <p style="text-align:center;">
   Demo nhận diện cảm xúc & tín hiệu phi ngôn ngữ từ giọng nói
 </p>
@@ -128,7 +128,7 @@
   <h2>Abstract</h2>
   <div class="card">
     <p>
-      Nonverbal vocalizations, such as laughter and fillers, play a critical role...
+      Nonverbal vocalizations, such as laughter and fillers, play a critical role in expressive speech generation and understanding, yet they are largely ignored in existing ASR and TTS systems. This limitation is particularly evident for low-resource languages like Vietnamese, where no dataset explicitly models nonverbal signals.In this work, we introduce ViNonverbal, the first Vietnamese dataset designed for nonverbal-aware ASR. The data are collected from real-world sources and processed through a semi-automatic pipeline, including speech separation, segmentation, and quality filtering, followed by ASR-based pseudo-labeling of nonverbal events. The resulting dataset contains approximately 40,000 Vietnamese samples (X hours of audio) with X types of nonverbal labels. We fine-tune multilingual ASR models, including Qwen3-ASR and Whisper, with extended nonverbal tokens. Evaluation on a manually annotated subset of 200 samples demonstrates effective recognition of nonverbal events while maintaining stable word error rate (WER)..
     </p>
   </div>
 </div>
@@ -139,7 +139,7 @@
   <div class="card">
     <img src="pipelinedata.png" class="pipeline-img">
     <p style="text-align:center;">
-      Audio → Feature Extraction → Model → Prediction
+    
     </p>
   </div>
 </div>
@@ -176,7 +176,7 @@
   </div>
 
   <p style="text-align:center; max-width:800px; margin:auto;">
-    The results indicate that incorporating nonverbal annotations does not degrade ASR performance.
+  
   </p>
 
   <!-- TABLE 2 -->
@@ -234,20 +234,17 @@ const data = [
   {
     file: "GhtFLxtbE0k_99.wav",
     text: "<uhm> không biết có sự hiểu lầm gì hay không",
-    nonverbal: "<uhmuhm>",
-    emotion: "neutral"
+    nonverbal: "<uhm",
   },
   {
     file: "UUI5v6yepFQ_64.wav",
     text: "chị thì giỏi giang... <sniffle>",
     nonverbal: "<sniffle>",
-    emotion: "sad"
   },
   {
     file: "eSou7s6C2FY_2.wav",
     text: "anh đã không còn bận tâm... <laugh>",
     nonverbal: "<laugh>",
-    emotion: "happy"
   }
 ];
 
