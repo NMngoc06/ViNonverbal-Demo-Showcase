@@ -22,29 +22,48 @@
       margin-top: 60px;
     }
 
-    /* CARD STYLE */
     .card {
       background: white;
       padding: 25px;
       margin: 25px auto;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      max-width: 900px;
+      width: 90%;
+      max-width: 1100px;
+      box-sizing: border-box;
       border-left: 5px solid #6366f1;
     }
 
     audio {
       width: 100%;
       margin-top: 10px;
+      display: block;
     }
 
-    /* ✅ FIX AUDIO: 1 CỘT */
     .grid {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      max-width: 900px;
+      gap: 35px;
+      width: 90%;
+      max-width: 1100px;
       margin: auto;
+    }
+
+    #samples .card {
+      width: 100%;
+      max-width: 1100px;
+      min-height: 170px;
+    }
+
+    .sample-text {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    .tag-row {
+      margin-top: 12px;
     }
 
     .tag {
@@ -64,7 +83,18 @@
       margin: auto;
     }
 
-    /* TABLE STYLE */
+    .analysis-card {
+      text-align: center;
+    }
+
+    .analysis-img {
+      width: 100%;
+      max-width: 650px;
+      display: block;
+      margin: 20px auto 30px auto;
+      border-radius: 12px;
+    }
+
     .result-table {
       width: 100%;
       border-collapse: collapse;
@@ -94,191 +124,197 @@
       text-align: center;
     }
 
-    /* DATA ANALYSIS */
-    .chart {
-      max-width: 600px;
-      margin: 20px auto;
-    }
-
     .download {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     .download a {
+      display: inline-block;
       background: #4f46e5;
       color: white;
       padding: 10px 18px;
       border-radius: 8px;
       text-decoration: none;
+      font-size: 15px;
+    }
+
+    .download a:hover {
+      background: #4338ca;
     }
   </style>
 </head>
 
 <body>
 
-<!-- TITLE -->
-<h1>ViNonverbal Demo </h1>
-<p style="text-align:center;">
-  Demo nhận diện cảm xúc & tín hiệu phi ngôn ngữ từ giọng nói
-</p>
-
-<!-- ABSTRACT -->
-<div class="section">
-  <h2>Abstract</h2>
-  <div class="card">
-    <p>
-      Nonverbal vocalizations, such as laughter and fillers, play a critical role in expressive speech generation and understanding, yet they are largely ignored in existing ASR and TTS systems. This limitation is particularly evident for low-resource languages like Vietnamese, where no dataset explicitly models nonverbal signals.In this work, we introduce ViNonverbal, the first Vietnamese dataset designed for nonverbal-aware ASR. The data are collected from real-world sources and processed through a semi-automatic pipeline, including speech separation, segmentation, and quality filtering, followed by ASR-based pseudo-labeling of nonverbal events. The resulting dataset contains approximately 40,000 Vietnamese samples (X hours of audio) with X types of nonverbal labels. We fine-tune multilingual ASR models, including Qwen3-ASR and Whisper, with extended nonverbal tokens. Evaluation on a manually annotated subset of 200 samples demonstrates effective recognition of nonverbal events while maintaining stable word error rate (WER)..
-    </p>
-  </div>
-</div>
-
-<!-- PIPELINE -->
-<div class="section">
-  <h2>Pipeline</h2>
-  <div class="card">
-    <img src="pipelinedata.png" class="pipeline-img">
-    <p style="text-align:center;">
-    
-    </p>
-  </div>
-</div>
-
-<!-- RESULTS -->
-<div class="section">
-  <h2>Results</h2>
-
-  <!-- TABLE 1 -->
-  <div class="card">
-    <h3>ASR Performance on VIVOS (WER)</h3>
-    <table class="result-table">
-      <tr>
-        <th>Model</th>
-        <th>WER (%)</th>
-      </tr>
-      <tr>
-        <td>PhoWhisper (large)</td>
-        <td>--</td>
-      </tr>
-      <tr>
-        <td>wav2vec2-large-vi-vlsp2020</td>
-        <td>--</td>
-      </tr>
-      <tr>
-        <td>Qwen3-ASR (ft)</td>
-        <td>--</td>
-      </tr>
-      <tr>
-        <td>Whisper (ft)</td>
-        <td>--</td>
-      </tr>
-    </table>
-  </div>
-
-  <p style="text-align:center; max-width:800px; margin:auto;">
-  
+  <h1>ViNonverbal Demo</h1>
+  <p style="text-align:center;">
+    ViNonverbal: The First Vietnamese Nonverbal Speech Dataset via Scalable Pseudo-Labeling
   </p>
 
-  <!-- TABLE 2 -->
-  <div class="card">
-    <h3>Performance on Proposed Dataset</h3>
-    <table class="result-table">
-      <tr>
-        <th>Model</th>
-        <th>WER</th>
-        <th>Precision</th>
-        <th>Recall</th>
-        <th>F1</th>
-      </tr>
-      <tr>
-        <td>Whisper</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-      </tr>
-      <tr>
-        <td>Qwen3-ASR</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-<!-- AUDIO SAMPLES -->
-<div class="section">
-  <h2>Audio Samples</h2>
-  <div id="samples" class="grid"></div>
-</div>
-
-<!-- DATA ANALYSIS -->
-<div class="section">
-  <h2>Data Analysis</h2>
-  <div class="card">
-    <h3>Nonverbal Distribution</h3>
-    <canvas id="chart" class="chart"></canvas>
-
-    <div class="download">
-      <a href="dataset.zip" download>⬇ Download Dataset</a>
+  <div class="section">
+    <h2>Abstract</h2>
+    <div class="card">
+      <p>
+        Nonverbal vocalizations, such as laughter and fillers,
+are essential for expressive speech recognition and synthesis, yet
+they are largely neglected in Vietnamese ASR and TTS systems.
+We introduce ViNonverbal, the first Vietnamese dataset for
+nonverbal-aware ASR, containing approximately 4,693 samples
+with 8 nonverbal event types. We fine-tune Qwen3-ASR and
+Whisper-large-v3 using extended nonverbal tokens to bridge this
+gap. Experimental results demonstrate that Qwen3-ASR achieves
+a superior F1-score of 57.21% for nonverbal event recognition,
+significantly outperforming the Whisper baseline. Furthermore,
+the model maintains high transcription stability with a WER
+of 6.16% on VIVOS and 13.61% on the ViNonverbal test set.
+These findings provide a robust foundation for developing more
+natural, human-like Vietnamese ASR and TTS systems that can
+understand and generate expressive nuances
     </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <div class="section">
+    <h2>Pipeline</h2>
+    <div class="card">
+      <img src="pipelinedata.png" class="pipeline-img">
+    </div>
+  </div>
 
-<script>
-const data = [
-  {
-    file: "GhtFLxtbE0k_99.wav",
-    text: "<uhm> không biết có sự hiểu lầm gì hay không",
-    nonverbal: "<uhm",
-  },
-  {
-    file: "UUI5v6yepFQ_64.wav",
-    text: "chị thì giỏi giang... <sniffle>",
-    nonverbal: "<sniffle>",
-  },
-  {
-    file: "eSou7s6C2FY_2.wav",
-    text: "anh đã không còn bận tâm... <laugh>",
-    nonverbal: "<laugh>",
-  }
-];
+  <div class="section">
+    <h2>Results</h2>
 
-const container = document.getElementById("samples");
+    <div class="card">
+      <h3>ASR Performance on VIVOS (WER)</h3>
+      <table class="result-table">
+        <tr>
+          <th>Model</th>
+          <th>WER(%)</th>
+        </tr>
+        <tr>
+          <td>PhoWhisper (large)</td>
+          <td>4.67</td>
+        </tr>
+        <tr>
+          <td>wav2vec2-large-vi-vlsp2020</td>
+          <td>8.61</td>
+        </tr>
+        <tr>
+          <td>Qwen3-ASR (ft)</td>
+          <td>10.73</td>
+        </tr>
+        <tr>
+          <td>Whisper_large_v3</td>
+          <td>6.16</td>
+        </tr>
+      </table>
+    </div>
 
-data.forEach(item => {
-  const div = document.createElement("div");
-  div.className = "card";
+    <div class="card">
+      <h3>Performance on Proposed Dataset</h3>
+      <table class="result-table">
+        <tr>
+          <th>Model</th>
+          <th>WER(%)</th>
+          <th>Precision(%)</th>
+          <th>Recall(%)</th>
+          <th>F1(%)</th>
+        </tr>
+        <tr>
+          <td>Whisper_large_v3</td>
+          <td>15.54</td>
+          <td>48.71</td>
+          <td>27.44</td>
+          <td>27.85</td>
+        </tr>
+        <tr>
+          <td>Qwen3-ASR</td>
+          <td>13.61</td>
+          <td>62.08</td>
+          <td>56.67</td>
+          <td>57.21</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-  div.innerHTML = `
-    <audio controls src="${item.file}"></audio>
-    <p><b>Text:</b> ${item.text}</p>
-    <p>
-      <span class="tag">Emotion: ${item.emotion}</span>
-      <span class="tag">Nonverbal: ${item.nonverbal}</span>
-    </p>
-  `;
+  <div class="section">
+    <h2>Audio Samples</h2>
+    <div id="samples" class="grid"></div>
+  </div>
 
-  container.appendChild(div);
-});
+  <div class="section">
+    <h2>Data Analysis</h2>
+    <div class="card analysis-card">
+      <h3>Nonverbal Distribution</h3>
 
-/* CHART */
-const ctx = document.getElementById('chart');
-new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['laugh', 'sniffle', 'uhm'],
-    datasets: [{
-      label: 'Frequency',
-      data: [12, 8, 15]
-    }]
-  }
-});
-</script>
+      <img src="donu2.png" class="analysis-img">
+
+      <div class="download">
+        <a href="https://huggingface.co/datasets/ngocminh06/ViNonverbal" target="_blank">
+          ⬇ Download Dataset
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const data = [
+      {
+        file: "GhtFLxtbE0k_99.wav",
+        text: "<uhm> không biết có sự hiểu lầm gì hay không",
+        nonverbal: "<uhm>"
+      },
+      {
+        file: "UUI5v6yepFQ_64.wav",
+        text: "Chị thì giỏi giang chị nuôi con ăn học đến nơi đến chốn thì dễ <sniffle>, chứ tôi nghèo con Mừng phải nghỉ học từ sớm lận, nó cực khổ chăm bề với tôi mà, với lại",
+        nonverbal: "<sniffle>"
+      },
+      {
+        file: "eSou7s6C2FY_2.wav",
+        text: "Anh đã không còn bận tâm nữa rồi, từ nay, anh sẽ không bao giờ giận em <laugh>",
+        nonverbal: "<laugh>"
+      }
+    ];
+
+    const container = document.getElementById("samples");
+
+    data.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "card";
+
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.src = item.file;
+
+      const textP = document.createElement("p");
+      textP.className = "sample-text";
+
+      const textBold = document.createElement("b");
+      textBold.textContent = "Text: ";
+
+      const textSpan = document.createElement("span");
+      textSpan.textContent = item.text;
+
+      textP.appendChild(textBold);
+      textP.appendChild(textSpan);
+
+      const tagRow = document.createElement("p");
+      tagRow.className = "tag-row";
+
+      const nonverbalTag = document.createElement("span");
+      nonverbalTag.className = "tag";
+      nonverbalTag.textContent = "Nonverbal: " + item.nonverbal;
+
+      tagRow.appendChild(nonverbalTag);
+
+      div.appendChild(audio);
+      div.appendChild(textP);
+      div.appendChild(tagRow);
+
+      container.appendChild(div);
+    });
+  </script>
 
 </body>
 </html>
